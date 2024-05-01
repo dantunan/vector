@@ -17,7 +17,7 @@ use crate::{
     },
 };
 #[derive(Default)]
-struct EventPartitioner;
+pub struct EventPartitioner;
 
 impl Partitioner for EventPartitioner {
     type Item = Event;
@@ -96,7 +96,7 @@ pub struct LogSink<S> {
 // The Datadog logs intake does not require the fields that are set in this
 // function. But if they are present in the event, we normalize the paths
 // (and value in the case of timestamp) to something that intake understands.
-fn normalize_event(event: &mut Event) {
+pub fn normalize_event(event: &mut Event) {
     let log = event.as_mut_log();
 
     // Upstream Sources may have semantically defined Datadog reserved attributes outside of their
@@ -139,7 +139,7 @@ fn normalize_event(event: &mut Event) {
 
 // If an expected reserved attribute is not located in the event root, rename it and handle
 // any potential conflicts by preserving the conflicting one with a _RESERVED_ prefix.
-fn position_reserved_attr_event_root(
+pub fn position_reserved_attr_event_root(
     log: &mut LogEvent,
     current_path: &OwnedTargetPath,
     expected_field_name: &str,
@@ -173,7 +173,7 @@ fn position_reserved_attr_event_root(
 // `PartialEq<BorrowedTargetPath<'_>>`. The alternative is doing a comparison against another
 // `OwnedTargetPath`, but the naïve implementation of that requires multiple allocations and copies
 // just to test equality.
-fn path_is_field(path: &OwnedTargetPath, field: &str) -> bool {
+pub fn path_is_field(path: &OwnedTargetPath, field: &str) -> bool {
     path.prefix == PathPrefix::Event
         && matches!(&path.path.segments[..], [OwnedSegment::Field(f)] if f.as_str() == field)
 }
@@ -200,7 +200,7 @@ impl From<serde_json::Error> for RequestBuildError {
     }
 }
 
-struct LogRequestBuilder {
+pub struct LogRequestBuilder {
     default_api_key: Arc<str>,
     transformer: Transformer,
     compression: Compression,

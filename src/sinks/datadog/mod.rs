@@ -22,10 +22,12 @@ pub mod logs;
 #[cfg(feature = "sinks-datadog_metrics")]
 pub mod metrics;
 #[cfg(any(
+    all(feature = "sinks-datadog_logs", feature = "test-utils"),
+    all(feature = "sinks-datadog_metrics", feature = "test-utils"),
     all(feature = "sinks-datadog_logs", test),
     all(feature = "sinks-datadog_metrics", test)
 ))]
-mod test_utils;
+pub mod test_utils;
 #[cfg(feature = "sinks-datadog_traces")]
 pub mod traces;
 
@@ -46,7 +48,7 @@ pub struct LocalDatadogCommonConfig {
     #[configurable(metadata(docs::examples = "http://127.0.0.1:8080"))]
     #[configurable(metadata(docs::examples = "http://example.com:12345"))]
     #[serde(default)]
-    endpoint: Option<String>,
+    pub endpoint: Option<String>,
 
     /// The Datadog [site][dd_site] to send observability data to.
     ///
