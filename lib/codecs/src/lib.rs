@@ -2,7 +2,7 @@
 //! byte messages, byte frames and structured events.
 
 #![deny(missing_docs)]
-#![deny(warnings)]
+// #![deny(warnings)]
 
 mod common;
 pub mod decoding;

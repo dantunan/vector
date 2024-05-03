@@ -192,7 +192,7 @@ environment-push: environment-prepare ## Publish a new version of the container 
 build: check-build-tools
 build: export CFLAGS += -g0 -O3
 build: ## Build the project in release mode (Supports `ENVIRONMENT=true`)
-	${MAYBE_ENVIRONMENT_EXEC} cargo build --release --no-default-features --features ${FEATURES}
+	${MAYBE_ENVIRONMENT_EXEC} cargo build --target x86_64-pc-nto-qnx710  --release --no-default-features 
 	${MAYBE_ENVIRONMENT_COPY_ARTIFACTS}
 
 .PHONY: build-dev
